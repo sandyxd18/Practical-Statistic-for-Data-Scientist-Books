@@ -62,6 +62,47 @@ Membahas estimasi relasi antar variabel untuk prediksi dan inferensi:
   - *Partial Residual Plots*: Memeriksa apakah hubungan antar prediktor dan target bersifat linear atau memerlukan transformasi.
 - **Polynomial dan Spline Regression**: Mengakomodasi relasi non-linear melalui regresi polinomial derajat tinggi dan penggunaan *polynomial splines* (B-splines / natural cubic splines) untuk fleksibilitas kurva tanpa osilasi ekstrem di ujung rentang data.
 
+### [Bab 5: Classification](Bab5_Classification.ipynb)
+Fokus pada pemodelan prediksi probabilitas dan penetapan kategori kelas (khususnya kasus biner dan multikelas):
+- **Naive Bayes**: Prinsip probabilitas bersyarat Bayes, asumsi independensi fitur (*naive assumption*), dan implementasi `MultinomialNB` pada data kategorikal dan numerik binned.
+- **Discriminant Analysis**: Pemahaman *covariance matrix*, Fisher's Linear Discriminant (`LinearDiscriminantAnalysis`), perhitungan bobot diskriminan, dan estimasi garis keputusan (*decision boundary*).
+- **Logistic Regression**: Transformasi fungsi logistik (*sigmoid*), logit (log-odds), Generalized Linear Models (GLM) via `statsmodels` dan `scikit-learn`, interpretasi koefisien dan Odds Ratio, serta evaluasi residual deviance.
+- **Evaluasi Model Klasifikasi**:
+  - *Confusion Matrix*: True Positive, False Positive, True Negative, dan False Negative.
+  - *Metrik Performa*: Akurasi, Precision, Recall (Sensitivity), dan Specificity pada masalah kelas langka (*rare class problem*).
+  - *ROC Curve & AUC*: Evaluasi trade-off True Positive Rate vs False Positive Rate di berbagai variasi ambang batas (*cutoff*), serta nilai Area Under the Curve (AUC).
+  - *Lift Chart*: Mengukur efektivitas seleksi target model dibandingkan seleksi acak.
+- **Strategi Penanganan Data Tidak Seimbang (Imbalanced Data)**:
+  - *Undersampling* dan *Oversampling*: Penyeimbangan rasio kelas mayoritas dan minoritas.
+  - *Up/Down Weighting*: Penyesuaian bobot observasi pada fungsi *loss*.
+  - *Data Generation (SMOTE)*: Sintesis data buatan untuk kelas minoritas menggunakan `imbalanced-learn`.
+  - *Cost-Based Classification*: Penetapan cutoff optimal berdasarkan asimetri matriks biaya/kerugian keputusan bisnis.
+
+### [Bab 6: Statistical Machine Learning](Bab6_Statistical_Machine_Learning.ipynb)
+Membahas metode machine learning statistik modern berbasis data non-parametrik dan teknik ensemble:
+- **K-Nearest Neighbors (KNN)**:
+  - Klasifikasi dan estimasi regresi berbasis kesamaan tetangga terdekat.
+  - Pengukuran jarak (Euclidean & Manhattan) dan pengaruh penskalaan fitur.
+  - Standardisasi data (*z-score scaling* menggunakan `StandardScaler`) dan One-Hot Encoding fitur kategorikal.
+  - Pemilihan nilai optimal hiperparameter $K$ melalui validasi silang (*cross-validation*).
+  - Pemanfaatan KNN sebagai *Feature Engine* untuk menghasilkan fitur probabilitas lokal bagi model downstream.
+- **Tree Models (Pohon Keputusan)**:
+  - Algoritma partisi rekursif (*recursive partitioning*) untuk membagi ruang prediktor menjadi subset homogen.
+  - Pengukuran *impurity* menggunakan Gini Impurity dan Information Gain (Entropy).
+  - Visualisasi aturan keputusan menggunakan diagram pohon (`plot_tree`) dan teks terstruktur (`export_text`).
+  - Pencegahan overfitting dengan penghentian pertumbuhan (*stopping rules*): pembatasan kedalaman (`max_depth`) dan jumlah sampel minimum per split (`min_samples_split`).
+  - *Regression Trees*: Prediksi nilai target kontinu dengan meminimalkan kuadrat kesalahan (SSE).
+- **Bagging dan Random Forest**:
+  - Prinsip Bootstrap Aggregation (Bagging) untuk mereduksi varians model pohon tunggal.
+  - Pengacakan subset fitur (*random feature selection*) pada tiap percabangan di Random Forest.
+  - Estimasi kesalahan out-of-bag (*Out-of-Bag Error / OOB*) tanpa memerlukan set validasi terpisah.
+  - Analisis *Variable Importance* (Mean Decrease in Impurity / Gini decrease) untuk mengukur kontribusi prediktor.
+- **Boosting**:
+  - Konsep pembelajaran sekuensial adaptif di mana setiap pohon baru memperbaiki residual kesalahan dari pohon sebelumnya.
+  - Implementasi eXtreme Gradient Boosting menggunakan library `xgboost` (`XGBClassifier`).
+  - Strategi regularisasi parameter (*learning rate* / $\eta$, `subsample`, `max_depth`) untuk menghindari overfitting.
+  - Optimasi hiperparameter menggunakan `GridSearchCV` dengan skema cross-validation.
+
 ---
 
 ## Dataset yang Digunakan
@@ -79,6 +120,9 @@ Seluruh notebook memuat dataset secara otomatis dari repositori data publik buku
 - `four_sessions.csv`: Durasi sesi web di empat variasi halaman untuk uji ANOVA.
 - `airline_stats.csv`: Metrik performa keterlambatan antar maskapai penerbangan.
 - `house_sales.csv`: Karakteristik fisik dan harga transaksi penjualan rumah di King County.
+- `loan_data.csv.gz`: Dataset riwayat dan status pinjaman Lending Club (~45 ribu data) untuk pemodelan klasifikasi dan ensemble.
+- `loan3000.csv`: Sampel 3.000 data pinjaman Lending Club untuk pemodelan dua prediktor pada Naive Bayes, LDA, KNN, dan Tree models.
+- `loan200.csv`: Sampel 200 pinjaman Lending Club untuk demonstrasi tetangga terdekat pada K-Nearest Neighbors (KNN).
 
 ---
 
@@ -91,6 +135,9 @@ Proyek ini dibangun menggunakan pustaka komputasi numerik dan statistik standar 
 - **numpy**: Operasi matriks, vektorisasi array, dan simulasi acak.
 - **scipy**: Modul `scipy.stats` untuk pengujian hipotesis, fungsi probabilitas, dan uji signifikansi.
 - **statsmodels**: Modul `statsmodels.api`, `statsmodels.formula.api`, dan analisis *power/sample size*.
+- **scikit-learn**: Algoritma klasifikasi (Naive Bayes, LDA, Logistic Regression), KNN, Decision Trees, Random Forest, metrik evaluasi (Confusion Matrix, ROC-AUC), dan modul prapemrosesan (`StandardScaler`).
+- **xgboost**: Implementasi algoritma Gradient Boosted Decision Trees yang teroptimasi dan skalabel.
+- **imbalanced-learn**: Teknik penyeimbangan dataset kelas langka menggunakan SMOTE (*Synthetic Minority Over-sampling Technique*).
 - **matplotlib** & **seaborn**: Visualisasi distribusi, scatterplot, korelasi, dan diagnostik residual.
 - **wquantiles**: Perhitungan weighted median dan weighted percentile.
 - **Jupyter Notebook**: Antarmuka interaktif eksekusi kode dan visualisasi.
@@ -114,7 +161,7 @@ Proyek ini dibangun menggunakan pustaka komputasi numerik dan statistik standar 
 
 3. **Install dependensi yang diperlukan**:
    ```bash
-   pip install pandas numpy scipy statsmodels matplotlib seaborn wquantiles jupyter
+   pip install pandas numpy scipy statsmodels scikit-learn xgboost imbalanced-learn matplotlib seaborn wquantiles jupyter
    ```
 
 4. **Jalankan Jupyter Notebook**:
