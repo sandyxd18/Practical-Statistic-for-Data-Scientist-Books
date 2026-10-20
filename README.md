@@ -103,6 +103,25 @@ Membahas metode machine learning statistik modern berbasis data non-parametrik d
   - Strategi regularisasi parameter (*learning rate* / $\eta$, `subsample`, `max_depth`) untuk menghindari overfitting.
   - Optimasi hiperparameter menggunakan `GridSearchCV` dengan skema cross-validation.
 
+### [Bab 7: Unsupervised Learning](Bab7_Unsupervised_Learning.ipynb)
+Membahas metode pembelajaran tak terawasi untuk reduksi dimensi, penemuan pola laten, dan pengelompokan data tanpa label target:
+- **Principal Components Analysis (PCA)**:
+  - Reduksi dimensi linear, ekstraksi komponen utama, dan interpretasi bobot kontribusi (*loadings*).
+  - Evaluasi rasio variansi terjelaskan menggunakan visualisasi Screeplot.
+  - Analisis Korespondensi (*Correspondence Analysis*) berbasis Singular Value Decomposition (SVD) untuk data kategorikal dan tabel kontinjensi.
+- **K-Means Clustering**:
+  - Mekanisme partisi data berbasis jarak centroid dan minimisasi *within-cluster sum of squares*.
+  - Penentuan jumlah cluster ($K$) optimal dengan *Elbow Method* dan interpretasi profil karakteristik tiap cluster.
+- **Hierarchical Clustering**:
+  - Pendekatan aglomeratif (*bottom-up*) bertingkat dan representasi struktur klaster menggunakan diagram Dendrogram.
+  - Evaluasi metrik *dissimilarity* serta perbandingan metode *linkage* (complete, average, single).
+- **Model-Based Clustering**:
+  - Pendekatan probabilistik berbasis campuran distribusi normal multivariat (*Gaussian Mixture Models / GMM*).
+  - Pemilihan jumlah komponen klaster dan struktur kovarians paling sesuai menggunakan Bayesian Information Criterion (BIC).
+- **Penskalaan (Scaling) dan Data Campuran**:
+  - Dampak disparitas skala antar-fitur terhadap metrik jarak dan teknik standarisasi fitur sebelum clustering.
+  - Pengelompokan data campuran numerik dan kategorikal menggunakan matriks ketidaksamaan jarak Gower (*Gower's distance*).
+
 ---
 
 ## Dataset yang Digunakan
